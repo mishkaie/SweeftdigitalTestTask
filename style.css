@@ -1,0 +1,7 @@
+.answerForm {
+    border: 1px solid black;
+    align-items:center;
+}
+#resetBtn {
+    float: right;
+}
