@@ -6,130 +6,36 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="selectCategory()">
 
-<form id="askdifficulty">
-    <input type="radio" value="hard" name="question" id="hard">
+<form id="chooseConfiguration">
+
+    <div id="inputDiv">
+    <h3>Choose question difficulty</h3>
     <label for="hard">Hard questions</label>
+    <input type="radio" value="hard" name="question" id="hard" onclick="enableButton()" >
     <br>
-    <input type="radio" value="medium" name="question" id="medium">
     <label for="medium">Medium questions</label>
+    <input type="radio" value="medium" name="question" id="medium" onclick="enableButton()" >
     <br>
-    <input type="radio" value="easy" name="question" id="easy">
     <label for="easy">Easy questions</label>
+    <input type="radio" value="easy" name="question" id="easy" onclick="enableButton()" >
     <br>
-    <button type="button" id="searchButton">Show questions</button>
+    <br>
+    </div>
+    <label for="category" name="category" id="categoryLabel"><b>Choose category</b></label>
+    <select id="category" required>
+        <option selected="selected">Any category</option>
+    </select>
+    <br>
+    <br>
+    <button type="button" id="searchButton" disabled>Give me questions</button>
+
 </form>
+
 <div id="questionForm"></div>
 <br>
 
-<script>
-
-const correctAnswers = {};
-let button = document.querySelector("button");
-let difficulty = document.getElementById('askdifficulty');
-let questionForm =document.getElementById('questionForm');
-
-async function jsonParser(url) {
-    const api = await fetch(url);
-    const jsonApi = await api.json();
-    
-    console.log(jsonApi)
-    return jsonApi;
-}
-
-function appendHTML(data) {
-   data['results'].map(questions => {
-        const section = document.createElement('section');
-        questionForm.appendChild(section);
-        let temp = [];
-        let correctanswer =  questions.correct_answer;
-        let incorrect_ans = questions.incorrect_answers;
-
-        incorrect_ans.push(correctanswer);
-        incorrect_ans.sort( () => .4 - Math.random() )
-
-
-        correctAnswers[questions.question] = questions.correct_answer;
-
-
-        section.innerHTML = `
-            <form id="${questions.question}" class="answerForm kitxvebi">
-            <h3>${questions.category}</h3>
-            <h2>${questions.question}</h2>
-            <h4>select answer<h4>
-            
-            ${incorrect_ans.map(temporary => 
-            `<input id="${questions.question}" type='radio' name="answer" value="${temporary}" >
-            <label >${temporary}</label>
-            <br>`).join("")}
-            </form>`
-            
-        });
-        console.log(correctAnswers);
-        
-        const submit = document.createElement('div');
-        questionForm.appendChild(submit); 
-        submit.innerHTML = `
-            <hr>
-            <br>
-            <button id="btn" onclick="handler()">submit</button>
-            <button id="resetBtn" onclick="resetForm()">reset questions</button>
-        `
-        
-}
-
-
-function handler(){
-    let but = document.getElementById('btn');
-    
-    let forma = document.querySelectorAll('.kitxvebi')
-
-    let pasuxebi = document.querySelectorAll('input[name="answer"]:checked');
-
-    let keyvalue = {};
-
-    let key;
-
-    let counter = 0;
-
-
-    pasuxebi.forEach(pasuxi => {
-        let kitxvaID = pasuxi.getAttribute('id');
-        let correctAnswerskeys = Object.keys(correctAnswers); 
-        if(correctAnswerskeys.includes(kitxvaID)){
-            let correctAnswersvalue = correctAnswers[kitxvaID]
-            pasuxiValue = pasuxi.getAttribute('value');
-            if(correctAnswersvalue == pasuxiValue){
-                console.error('sworea')
-                counter++;
-                console.error(counter)
-            }
-
-        }  
-    });
-
-
-};
-
-button.addEventListener('click',(event) => {
-    let input = document.querySelector('input[name="question"]:checked');
-    
-    let xhr = ("https://opentdb.com/api.php?amount=10&difficulty="+input.value);
-    jsonParser(xhr)
-    .then(data => appendHTML(data))
-    .catch(err => console.error(err))
-    difficulty.style.display = 'none';
-    
-});
-
-function resetForm(){
-    let answerForm = document.getElementById('answerForm');
-    answerForm.style.display = 'none';
-    difficulty.style.display = 'block';
-}
-            
-
-</script>
+<script src="index.js"></script>
 </body>
 </html>

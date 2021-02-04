@@ -2,6 +2,36 @@
     border: 1px solid black;
     align-items:center;
 }
+
+#searchButton {
+    font-size: 16px;
+    padding: 10px;
+}
+
+#chooseConfiguration {
+    padding: 10px;
+}
+
+#categoryLabel {
+    padding:5px;
+    font-size: 18px;
+}
+
+#inputDiv {
+    border: 1px solid black;
+    display: block;
+    margin: 5px;
+    line-height: 1.6;
+
+}
+
+#btn {
+    font-size: 20px;
+}
+
 #resetBtn {
-    float: right;
+    position: relative;
+    left: 50px;
+    font-size: 20px;
+
 }
