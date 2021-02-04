@@ -20,8 +20,7 @@ async function jsonParser(url) {
     }
 }
 
-function appendHTML(data) {
-  
+function appendHTML(data) { 
    data['results'].map(questions => {
 
         const section = document.createElement('section');
@@ -75,13 +74,14 @@ function handler(){
         }  
     });
     
-    alert("You answered correctly " + counter + "times")
+    alert("You answered correctly " + counter + " times")
 };
 
 button.addEventListener('click',(event) => {
     let selectDiff = document.querySelector('input[name="question"]:checked').value;
     let categoryValue = document.getElementById('category').value;
     let xhr;
+
 
     if(categoryValue == 'Any category'){
         xhr = ("https://opentdb.com/api.php?amount=10&difficulty="+selectDiff);
@@ -91,7 +91,7 @@ button.addEventListener('click',(event) => {
     
     jsonParser(xhr)
     .then(data => appendHTML(data))
-    .catch(err => console.error(err))
+    .catch(err => console.log(err))
     configForm.style.display = 'none';
     
 });
